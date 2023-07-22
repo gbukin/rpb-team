@@ -36,6 +36,7 @@ class HandleInertiaRequests extends Middleware
                 'user.roles' => $request->user() ? $request->user()->roles->pluck('name') : [],
                 'user.permissions' => $request->user() ? $request->user()->getPermissionsViaRoles()->pluck('name') : []
             ],
+            'isAdmin' => $request->user() && !is_null($request->user()->roles->where('name', 'admin')->first()),
             'ziggy' => function () use ($request) {
                 return array_merge((new Ziggy)->toArray(), [
                     'location' => $request->url(),

@@ -20,7 +20,7 @@ class EventController extends Controller
 
         return response()->json([
             'columns' => ['Название', 'Начало', 'Конец', 'Тип участия', 'Этап'],
-            'rows' => $events->toArray(),
+            'rows' => $events,
         ]);
     }
 

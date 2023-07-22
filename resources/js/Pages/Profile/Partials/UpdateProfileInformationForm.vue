@@ -89,7 +89,7 @@ const form = useForm({
                 <PrimaryButton :disabled="form.processing">Сохранить</PrimaryButton>
 
                 <Transition enter-from-class="opacity-0" leave-to-class="opacity-0" class="transition ease-in-out">
-                    <p v-if="form.recentlySuccessful" class="text-sm text-gray-600">Сохранено.</p>
+                    <p v-if="form.recentlySuccessful" class="text-sm text-gray-600">Сохранено</p>
                 </Transition>
             </div>
         </form>

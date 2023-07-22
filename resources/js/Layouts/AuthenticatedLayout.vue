@@ -8,6 +8,8 @@ import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 import {Link} from '@inertiajs/vue3';
 
 const showingNavigationDropdown = ref(false);
+
+
 </script>
 
 <template>
@@ -37,6 +39,9 @@ const showingNavigationDropdown = ref(false);
                                 </NavLink>
                                 <NavLink :href="''">
                                     Моя команда
+                                </NavLink>
+                                <NavLink v-if="$page.props.isAdmin" :href="route('admin.menu')" :active="route().current('admin.menu')">
+                                    Админка
                                 </NavLink>
                             </div>
                         </div>

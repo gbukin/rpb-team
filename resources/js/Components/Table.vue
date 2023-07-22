@@ -5,8 +5,6 @@ import {router} from "@inertiajs/vue3";
 export default {
     data() {
         return {
-            searchText: '',
-            searchText2: '',
             tableColumns: [],
             tableRows: [],
             tableRowsId: []
@@ -50,7 +48,7 @@ defineProps({
 </script>
 
 <template>
-    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400" url="{{$page.props.url}}">
+    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400" url="{{$page.props.url}}" element-url="{{$page.props.elementUrl}}">
         <thead class="text-xs text-card-gray uppercase bg-card">
         <tr>
             <th scope="col"
@@ -61,7 +59,7 @@ defineProps({
         </tr>
         </thead>
         <tbody>
-        <tr class="bg-card border-b border-card-border hover:bg-gray-200 hover:cursor-pointer"
+        <tr class="bg-card border-b border-card-border hover:bg-button-gray hover:cursor-pointer"
             v-for="(row, index) in tableRows">
             <th scope="row"
                 class="px-6 py-4 font-medium text-primary whitespace-nowrap"
