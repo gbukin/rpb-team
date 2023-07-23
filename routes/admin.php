@@ -2,8 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 
-// Главная всегда ведёт на мероприятия
-
 // Страницы
 
 Route::get('/', [\App\Http\Controllers\Admin\AdminController::class, 'menu'])->name('menu');
@@ -11,19 +9,30 @@ Route::get('/', [\App\Http\Controllers\Admin\AdminController::class, 'menu'])->n
 Route::get('/users', [\App\Http\Controllers\Admin\AdminController::class, 'users'])->name('users');
 Route::get('/events', [\App\Http\Controllers\Admin\AdminController::class, 'events'])->name('events');
 
-Route::group(['prefix' => '/tasks'], function () {
-    Route::get('/', [\App\Http\Controllers\Admin\TaskController::class, 'index'])->name('tasks');
-    Route::get('/create', [\App\Http\Controllers\Admin\TaskController::class, 'create'])->name('tasks.create');
-    Route::post('/store', [\App\Http\Controllers\Admin\TaskController::class, 'store'])->name('tasks.store');
-    Route::get('/edit/{task}', [\App\Http\Controllers\Admin\TaskController::class, 'edit'])->name('tasks.edit');
-    Route::patch('/update/{task}', [\App\Http\Controllers\Admin\TaskController::class, 'update'])->name('tasks.update');
-    Route::post('/archive/{task}', [\App\Http\Controllers\Admin\TaskController::class, 'archive'])->name('tasks.archive');
-    Route::delete('/delete/{task}', [\App\Http\Controllers\Admin\TaskController::class, 'delete'])->name('tasks.delete');
+Route::prefix('tasks')->name('tasks.')->group(function () {
+    Route::get('/', [\App\Http\Controllers\Admin\TaskController::class, 'index'])->name('index');
+    Route::get('/create', [\App\Http\Controllers\Admin\TaskController::class, 'create'])->name('create');
+    Route::post('/store', [\App\Http\Controllers\Admin\TaskController::class, 'store'])->name('store');
+    Route::get('/edit/{task}', [\App\Http\Controllers\Admin\TaskController::class, 'edit'])->name('edit');
+    Route::patch('/update/{task}', [\App\Http\Controllers\Admin\TaskController::class, 'update'])->name('update');
+    Route::post('/archive/{task}', [\App\Http\Controllers\Admin\TaskController::class, 'archive'])->name('archive');
+    Route::delete('/delete/{task}', [\App\Http\Controllers\Admin\TaskController::class, 'delete'])->name('delete');
 
-    Route::get('/types/create', [\App\Http\Controllers\Admin\TaskTypeController::class, 'create'])->name('tasks.types.create');
-    Route::post('/types/store', [\App\Http\Controllers\Admin\TaskTypeController::class, 'store'])->name('tasks.types.store');
-    Route::get('/categories/create', [\App\Http\Controllers\Admin\TaskCategoryController::class, 'create'])->name('tasks.categories.create');
-    Route::post('/categories/store', [\App\Http\Controllers\Admin\TaskCategoryController::class, 'store'])->name('tasks.categories.store');
+    Route::prefix('types')->name('types.')->group(function () {
+        Route::get('/types', [\App\Http\Controllers\Admin\TaskTypeController::class, 'index'])->name('index');
+        Route::get('/types/create', [\App\Http\Controllers\Admin\TaskTypeController::class, 'create'])->name('create');
+        Route::post('/types/store', [\App\Http\Controllers\Admin\TaskTypeController::class, 'store'])->name('store');
+        Route::post('/types/edit/{type}', [\App\Http\Controllers\Admin\TaskTypeController::class, 'edit'])->name('edit');
+        Route::post('/types/delete/{type}', [\App\Http\Controllers\Admin\TaskTypeController::class, 'delete'])->name('delete');
+    });
+
+    Route::prefix('categories')->name('categories.')->group(function() {
+        Route::get('/categories', [\App\Http\Controllers\Admin\TaskCategoryController::class, 'index'])->name('index');
+        Route::get('/categories/create', [\App\Http\Controllers\Admin\TaskCategoryController::class, 'create'])->name('create');
+        Route::post('/categories/store', [\App\Http\Controllers\Admin\TaskCategoryController::class, 'store'])->name('store');
+        Route::post('/categories/edit/{category}', [\App\Http\Controllers\Admin\TaskCategoryController::class, 'edit'])->name('edit');
+        Route::post('/categories/delete/{category}', [\App\Http\Controllers\Admin\TaskCategoryController::class, 'delete'])->name('delete');
+    });
 });
 
 // Секция API

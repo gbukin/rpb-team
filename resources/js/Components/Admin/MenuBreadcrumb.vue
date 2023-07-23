@@ -26,8 +26,8 @@ import MenuBreadCrumbElement from "@/Components/Admin/MenuBreadCrumbElement.vue"
                     </svg>
                 </template>
             </MenuBreadCrumbElement>
-            <MenuBreadCrumbElement :href="route('admin.tasks')"
-                                   :active="route().current('admin.tasks')"
+            <MenuBreadCrumbElement :href="route('admin.tasks.index')"
+                                   :active="route().current('admin.tasks.index')"
                                    :tooltip="'Задачи'">
                 <template v-slot:default>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"

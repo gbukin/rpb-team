@@ -18,7 +18,7 @@ const props = defineProps({
 
 const classes = computed(() =>
     props.active
-        ? `text-primary mx-3 disabled pointer-events-none`
+        ? `scale-110 text-primary mx-3 disabled pointer-events-none`
         : `hover:text-primary scale-100 hover:scale-125 ease-in duration-200 mx-3`
 );
 
@@ -30,7 +30,6 @@ const disabled = computed(() =>
 <template>
     <a :href="href"
        :class="classes"
-       disabled
        :data-tooltip-target="'tooltip-' + tooltip"
        data-tooltip-style="light"
     >

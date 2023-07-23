@@ -32,7 +32,7 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
                         </svg>
                     </div>
                 </a>
-                <a :href="route('admin.tasks')" class="p-3 sm:p-4 md:p-5 hover:bg-gray-900 active:bg-slate-900 scale-75 hover:scale-100 md:scale-100 hover:md:scale-110 ease-in duration-200 border border-primary rounded text-secondary hover:text-primary m-1 sm:m-2 md:m-3">
+                <a :href="route('admin.tasks.index')" class="p-3 sm:p-4 md:p-5 hover:bg-gray-900 active:bg-slate-900 scale-75 hover:scale-100 md:scale-100 hover:md:scale-110 ease-in duration-200 border border-primary rounded text-secondary hover:text-primary m-1 sm:m-2 md:m-3">
                     <div class="border-bottom border-primary text-white md:text-lg text-center">
                         Задачи
                     </div>

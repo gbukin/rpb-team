@@ -10,6 +10,14 @@ use Inertia\Inertia;
 
 class TaskCategoryController extends Controller
 {
+    public function index()
+    {
+        return Inertia::render(
+            'Admin/Tasks/Categories/Categories',
+            ['categories' => TaskCategory::withTrashed()->get()]
+        );
+    }
+
     public function create()
     {
         return Inertia::render('Admin/Tasks/Categories/CategoryCreate');
@@ -21,6 +29,20 @@ class TaskCategoryController extends Controller
         $task_type->category = $request->request->get('category');
         $task_type->save();
 
-        return Redirect::route('admin.tasks');
+        return Redirect::route('admin.tasks.categories.index');
+    }
+
+    public function archive(TaskCategory $category)
+    {
+        $category->delete();
+
+        return Redirect::back();
+    }
+
+    public function delete(TaskCategory $category)
+    {
+        $category->forceDelete();
+
+        return Redirect::back();
     }
 }
