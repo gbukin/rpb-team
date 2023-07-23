@@ -5,17 +5,29 @@ import PrimaryButton from "@/Components/PrimaryButton.vue";
 import TextInput from "@/Components/TextInput.vue";
 import InputError from "@/Components/InputError.vue";
 import InputLabel from "@/Components/InputLabel.vue";
-import Select from "@/Components/Select.vue";
-import {useForm} from "@inertiajs/vue3";
+import {useForm, usePage} from "@inertiajs/vue3";
 
-const form = useForm({
-    title: null,
-    description: null,
-    difficulty: 1,
-    task_type: null,
-    task_category: null
+const props = defineProps({
+    task: {
+        type: Array,
+        required: true
+    },
+    task_ctf: {
+        type: Array,
+        required: true
+    }
 });
 
+const task = usePage().props.task;
+const task_ctf = usePage().props.task_ctf;
+
+const form = useForm({
+    title: task.title,
+    description: task.description,
+    difficulty: task.difficulty,
+    flag: task_ctf.flag,
+
+});
 </script>
 
 <template>
@@ -23,9 +35,9 @@ const form = useForm({
         <MenuBreadcrumb/>
         <section class="card p-5 bg-card mt-12 w-3/4 mx-auto">
             <header class="card-header mb-4 text-center">
-                <h1 class="text-primary text-4xl font-bold">Новая задача</h1>
+                <h1 class="text-primary text-4xl font-bold">Редактирование</h1>
             </header>
-            <form @submit.prevent="form.post(route('admin.tasks.store'))" class="mt-6 space-y-6">
+            <form @submit.prevent="form.patch(route('admin.tasks.update', [task.id]))" class="mt-6 space-y-6">
                 <div>
                     <InputLabel for="title" value="Название"/>
 
@@ -72,29 +84,17 @@ const form = useForm({
                 </div>
 
                 <div>
-                    <InputLabel for="task_type" value="Тип задачи"/>
+                    <InputLabel for="flag" value="Флаг"/>
 
-                    <Select :options="$page.props.task_types"
-                            name="task_type"
-                            v-model="form.task_type"
-                            placeholder="Выберите тип задачи"
-                            required
+                    <TextInput
+                        id="flag"
+                        type="text"
+                        class="mt-1 block w-full"
+                        v-model="form.flag"
+                        required
                     />
 
-                    <InputError class="mt-2" :message="form.errors.task_type"/>
-                </div>
-
-                <div>
-                    <InputLabel for="task_category" value="Категория задачи"/>
-
-                    <Select :options="$page.props.task_categories"
-                            name="task_category"
-                            v-model="form.task_category"
-                            placeholder="Выберите категорию задачи"
-                            required
-                    />
-
-                    <InputError class="mt-2" :message="form.errors.task_category"/>
+                    <InputError class="mt-2" :message="form.errors.flag"/>
                 </div>
 
                 <div class="flex items-center gap-4">

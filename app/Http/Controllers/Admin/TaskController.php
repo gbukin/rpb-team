@@ -22,7 +22,7 @@ class TaskController extends Controller
     {
         return Inertia::render('Admin/Tasks/TaskCreate')
             ->with([
-                'task_types' => TaskType::all()->pluck('type', 'id')->all(),
+                'task_types' => TaskType::all()->pluck('type_name', 'id')->all(),
                 'task_categories' => TaskCategory::all()->pluck('category', 'id')->all()
             ]);
     }
@@ -45,7 +45,10 @@ class TaskController extends Controller
 
     public function edit(Task $task)
     {
-        return Inertia::render('Admin/Tasks/TaskEdit', ['task' => $task]);
+        return Inertia::render(
+            $task->getEditComponent(),
+            array_merge(['task' => $task], $task->getEditRelatedModel())
+        );
     }
 
     public function update(Request $request, Task $task)
@@ -55,11 +58,14 @@ class TaskController extends Controller
         $task->title = $form['title'];
         $task->description = $form['description'];
         $task->difficulty = $form['difficulty'];
-        $task->task_type_id = $form['task_type_id'];
-        $task->task_category_id = $form['task_category_id'];
+
+        $task->updateRelated($request->request->all());
+//        dump($task);
+//        $task->task_type_id = $form['task_type_id'];
+//        $task->task_category_id = $form['task_category_id'];
         $task->save();
 
-        return Redirect::back();
+//        return Redirect::back();
     }
 
     public function archive(Task $task)

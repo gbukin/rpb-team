@@ -5,22 +5,14 @@ import PrimaryButton from "@/Components/PrimaryButton.vue";
 import TextInput from "@/Components/TextInput.vue";
 import InputError from "@/Components/InputError.vue";
 import InputLabel from "@/Components/InputLabel.vue";
-import {useForm, usePage} from "@inertiajs/vue3";
-
-const props = defineProps({
-    task: {
-        type: Array,
-        required: true
-    }
-});
-
-const task = usePage().props.task;
+import Select from "@/Components/Select.vue";
+import {useForm} from "@inertiajs/vue3";
 
 const form = useForm({
-    title: task.title,
-    description: task.description,
-    difficulty: task.difficulty,
+    type: null,
+    type_name: null
 });
+
 </script>
 
 <template>
@@ -28,52 +20,36 @@ const form = useForm({
         <MenuBreadcrumb/>
         <section class="card p-5 bg-card mt-12 w-3/4 mx-auto">
             <header class="card-header mb-4 text-center">
-                <h1 class="text-primary text-4xl font-bold">Редактирование</h1>
+                <h1 class="text-primary text-4xl font-bold">Новый тип</h1>
             </header>
-            <form @submit.prevent="form.patch(route('admin.tasks.update', [task.id]))" class="mt-6 space-y-6">
+            <form @submit.prevent="form.post(route('admin.tasks.types.store'))" class="mt-6 space-y-6">
                 <div>
-                    <InputLabel for="title" value="Название"/>
+                    <InputLabel for="type" value="Тип задачи"/>
 
                     <TextInput
                         id="title"
                         type="text"
                         class="mt-1 block w-full"
-                        v-model="form.title"
+                        v-model="form.type"
                         required
                         autofocus
                     />
 
-                    <InputError class="mt-2" :message="form.errors.title"/>
+                    <InputError class="mt-2" :message="form.errors.type"/>
                 </div>
 
                 <div>
-                    <InputLabel for="description" value="Описание"/>
+                    <InputLabel for="type_name" value="Название типа задачи (на русском)"/>
 
                     <TextInput
                         id="description"
                         type="text"
                         class="mt-1 block w-full"
-                        v-model="form.description"
+                        v-model="form.type_name"
                         required
                     />
 
-                    <InputError class="mt-2" :message="form.errors.description"/>
-                </div>
-
-                <div>
-                    <InputLabel for="difficulty" value="Сложность"/>
-
-                    <TextInput
-                        id="difficulty"
-                        type="number"
-                        min="1"
-                        max="10"
-                        class="mt-1 block w-full"
-                        v-model="form.difficulty"
-                        required
-                    />
-
-                    <InputError class="mt-2" :message="form.errors.difficulty"/>
+                    <InputError class="mt-2" :message="form.errors.type_name"/>
                 </div>
 
                 <div class="flex items-center gap-4">
@@ -89,8 +65,4 @@ const form = useForm({
 </template>
 
 <style scoped>
-input[type="number"]::-webkit-outer-spin-button,
-input[type="number"]::-webkit-inner-spin-button {
-    display: none;
-}
 </style>

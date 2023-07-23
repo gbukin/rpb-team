@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Tasks\TaskType;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -20,11 +20,12 @@ class DatabaseSeeder extends Seeder
         $admin->password = \Hash::make('oral_cumshot');
         $admin->save();
 
-        // \App\Models\User::factory(10)->create();
+        $type = new TaskType();
+        $type->type = 'flag';
+        $type->save();
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        $type = new TaskType();
+        $type->type = 'form';
+        $type->save();
     }
 }

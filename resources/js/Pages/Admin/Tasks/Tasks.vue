@@ -20,8 +20,14 @@ const props = defineProps({
             </header>
             <section class="grid grid-cols-1 gap-1">
                 <article class="text-right mb-6 mr-3">
-                    <a :href="route('admin.tasks.create')">
-                        <primary-button>Создать</primary-button>
+                    <a :href="route('admin.tasks.create')" class="mx-2">
+                        <primary-button>Новая задача</primary-button>
+                    </a>
+                    <a :href="route('admin.tasks.types.create')" class="mx-2">
+                        <primary-button>Новый тип</primary-button>
+                    </a>
+                    <a :href="route('admin.tasks.categories.create')" class="mx-2">
+                        <primary-button>Новая категория</primary-button>
                     </a>
                 </article>
                 <article class="p-6 mb-6 text-base rounded-lg bg-gray-900 mr-3" v-for="task in $page.props.tasks">
