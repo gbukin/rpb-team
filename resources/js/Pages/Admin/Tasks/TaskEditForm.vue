@@ -26,7 +26,7 @@ const form = useForm({
     title: task.title,
     description: task.description,
     difficulty: task.difficulty,
-    fields: JSON.parse(task_form.fields),
+    fields: task_form.fields ? JSON.parse(task_form.fields) : []
 });
 </script>
 

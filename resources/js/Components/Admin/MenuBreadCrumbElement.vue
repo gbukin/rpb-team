@@ -36,7 +36,7 @@ const disabled = computed(() =>
     >
         <slot></slot>
     </a>
-    <div v-if="!active" :id="'tooltip-' + tooltip" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip">
+    <div :id="'tooltip-' + tooltip" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip">
         {{ tooltip }}
     </div>
 </template>

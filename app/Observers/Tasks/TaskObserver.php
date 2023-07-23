@@ -3,8 +3,6 @@
 namespace App\Observers\Tasks;
 
 use App\Models\Tasks\Task;
-use App\Models\Tasks\TaskCtf;
-use App\Models\Tasks\TaskForm;
 
 class TaskObserver
 {
