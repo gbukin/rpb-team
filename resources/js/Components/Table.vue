@@ -7,25 +7,35 @@ export default {
         return {
             tableColumns: [],
             tableRows: [],
-            tableRowsId: []
+            tableRowsId: [],
+            searchString: '',
+            timeout: null,
         }
     },
     methods: {
         updateTable() {
             axios
-                .get(this.$props.url)
+                .get(this.$props.url, {params: {search: this.searchString}})
                 .then(response => {
                     this.tableColumns = response.data.columns;
                     this.tableRows = response.data.rows;
 
                     for (let index in this.tableRows) {
-                         this.tableRowsId[index] = this.tableRows[index].id;
-                         delete this.tableRows[index].id;
+                        this.tableRowsId[index] = this.tableRows[index].id;
+                        delete this.tableRows[index].id;
                     }
                 })
         },
         moveToElement(id) {
             return router.visit(route(this.$props.elementUrl, {id: id}));
+        },
+        search: function() {
+            clearTimeout(this.timeout);
+            let self = this;
+            this.timeout = setTimeout(function () {
+                self.updateTable();
+            }, 200);
+
         }
     },
     mounted() {
@@ -35,6 +45,9 @@ export default {
 </script>
 
 <script setup>
+import SearchTextInput from "@/Components/SearchTextInput.vue";
+import InputLabel from "@/Components/InputLabel.vue";
+
 defineProps({
     url: {
         type: String,
@@ -43,12 +56,21 @@ defineProps({
     elementUrl: {
         type: String,
         required: true
+    },
+    withSearch: {
+        type: Boolean,
+        default: false
     }
 });
 </script>
 
 <template>
-    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400" url="{{$page.props.url}}" element-url="{{$page.props.elementUrl}}">
+    <section class="mb-4 p-3" v-if="withSearch">
+        <InputLabel value="Поиск"/>
+        <SearchTextInput v-model="searchString" @keyup="search"/>
+    </section>
+    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400" url="{{$page.props.url}}"
+           element-url="{{$page.props.elementUrl}}">
         <thead class="text-xs text-card-gray uppercase bg-card">
         <tr>
             <th scope="col"
